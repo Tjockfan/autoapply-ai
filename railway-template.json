@@ -1,0 +1,27 @@
+{
+  "name": "AutoApply AI",
+  "description": "AI-powered job application automation platform",
+  "variables": [
+    {
+      "name": "NODE_ENV",
+      "value": "production"
+    },
+    {
+      "name": "PORT",
+      "value": "3000"
+    },
+    {
+      "name": "JWT_EXPIRES_IN",
+      "value": "7d"
+    },
+    {
+      "name": "CORS_ORIGIN",
+      "value": "*"
+    }
+  ],
+  "required": [
+    "DATABASE_URL",
+    "JWT_SECRET",
+    "OPENAI_API_KEY"
+  ]
+}

@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  firstName String?
+  lastName  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  jobs         Job[]
+  applications Application[]
+  resumes      Resume[]
+
+  @@map("users")
+}
+
+model Job {
+  id          String    @id @default(uuid())
+  title       String
+  company     String
+  location    String?
+  description String    @db.Text
+  salaryRange String?
+  jobType     JobType   @default(FULL_TIME)
+  url         String?
+  source      String?   // e.g., "linkedin", "indeed", "manual"
+  status      JobStatus @default(ACTIVE)
+  postedAt    DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applications Application[]
+
+  @@map("jobs")
+}
+
+model Application {
+  id              String            @id @default(uuid())
+  coverLetter     String?           @db.Text
+  status          ApplicationStatus @default(PENDING)
+  appliedAt       DateTime?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  // Relations
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobId    String
+  job      Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  resumeId String?
+  resume   Resume? @relation(fields: [resumeId], references: [id])
+
+  @@unique([userId, jobId])
+  @@map("applications")
+}
+
+model Resume {
+  id          String   @id @default(uuid())
+  name        String
+  content     String   @db.Text
+  fileUrl     String?
+  isDefault   Boolean  @default(false)
+  parsedData  Json?    // Store parsed resume data
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applications Application[]
+
+  @@map("resumes")
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  FREELANCE
+  INTERNSHIP
+}
+
+enum JobStatus {
+  ACTIVE
+  EXPIRED
+  FILLED
+  ARCHIVED
+}
+
+enum ApplicationStatus {
+  PENDING
+  APPLIED
+  INTERVIEWING
+  REJECTED
+  OFFERED
+  HIRED
+  WITHDRAWN
+}

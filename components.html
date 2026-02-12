@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoApply AI - Component Library</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Nautical Blue */
+            --navy-900: #0A1628;
+            --navy-800: #1A2B4A;
+            --navy-700: #2A4060;
+            --navy-600: #3D5A80;
+            --navy-500: #4A6FA5;
+            
+            /* Ocean Accents */
+            --ocean-500: #00A8E8;
+            --ocean-400: #22B8E8;
+            --ocean-300: #5CC8E8;
+            --ocean-200: #A8E0F0;
+            --ocean-100: #E0F4FA;
+            
+            /* Gold/Bronze Luxury */
+            --gold-500: #C9A227;
+            --gold-400: #D9B73A;
+            --gold-300: #E8C94C;
+            --gold-100: #F5E6B3;
+            
+            /* Semantic */
+            --success-500: #10B981;
+            --success-100: #D1FAE5;
+            --warning-500: #F59E0B;
+            --warning-100: #FEF3C7;
+            --error-500: #EF4444;
+            --error-100: #FEE2E2;
+            --info-500: #3B82F6;
+            --info-100: #DBEAFE;
+            
+            /* Neutral */
+            --gray-900: #111827;
+            --gray-700: #374151;
+            --gray-600: #4B5563;
+            --gray-500: #6B7280;
+            --gray-400: #9CA3AF;
+            --gray-300: #D1D5DB;
+            --gray-200: #E5E7EB;
+            --gray-100: #F3F4F6;
+            --gray-50: #F9FAFB;
+            --white: #FFFFFF;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(10, 22, 40, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(10, 22, 40, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(10, 22, 40, 0.1);
+            --shadow-glow: 0 0 20px rgba(0, 168, 232, 0.3);
+            --shadow-gold: 0 0 20px rgba(201, 162, 39, 0.3);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--navy-900);
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-subtitle {
+            color: var(--gray-500);
+            margin-bottom: 3rem;
+        }
+        
+        /* Section Styles */
+        .section {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--gray-200);
+        }
+        
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy-900);
+            margin-bottom: 0.5rem;
+        }
+        
+        .section-desc {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .component-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: var(--gray-50);
+            border-radius: 12px;
+            border: 1px dashed var(--gray-300);
+        }
+        
+        .component-label {
+            width: 100%;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-400);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* BUTTONS */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-sm { padding: 0.375rem 0.75rem; font-size: 0.8rem; }
+        .btn-lg { padding: 0.875rem 1.75rem; font-size: 1rem; }
+        .btn-xl { padding: 1rem 2rem; font-size: 1.1rem; }
+        
+        /* Button Variants */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--navy-600), var(--ocean-500));
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+        
+        .btn-secondary {
+            background: var(--white);
+            color: var(--navy-600);
+            border: 1px solid var(--gray-300);
+        }
+        .btn-secondary:hover {
+            background: var(--gray-100);
+            border-color: var(--navy-600);
+        }
+        
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-500), var(--gold-400));
+            color: var(--navy-900);
+            box-shadow: var(--shadow-md);
+        }
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg), var(--shadow-gold);
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--gray-600);
+        }
+        .btn-ghost:hover {
+            background: var(--gray-100);
+            color: var(--gray-900);
+        }
+        
+        .btn-danger {
+            background: var(--error-500);
+            color: white;
+        }
+        .btn-danger:hover { background: #DC2626; }
+        
+        .btn-success {
+            background: var(--success-500);
+            color: white;
+        }
+        .btn-success:hover { background: #059669; }
+        
+        /* Button States */
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .btn-loading {
+            position: relative;
+            color: transparent;
+        }
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border: 2px solid currentColor;
+            border-right-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.75s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* INPUTS */
+        .form-group {
+            margin-bottom: 1rem;
+            min-width: 280px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 0.375rem;
+        }
+        
+        .form-label .required {
+            color: var(--error-500);
+        }
+        
+        .input {
+            width: 100%;
+            padding: 0.625rem 0.875rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--gray-900);
+            background: var(--white);
+            transition: all 0.2s;
+        }
+        
+        .input:focus {
+            outline: none;
+            border-color: var(--ocean-500);
+            box-shadow: 0 0 0 3px rgba(0, 168, 232, 0.1);
+        }
+        
+        .input::placeholder {
+            color: var(--gray-400);
+        }
+        
+        .input-error {
+            border-color: var(--error-500);
+        }
+        
+        .input-error:focus {
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+        
+        .input-success {
+            border-color: var(--success-500);
+        }
+        
+        .form-error {
+            font-size: 0.8rem;
+            color: var(--error-500);
+            margin-top: 0.375rem;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon .icon {
+            position: absolute;
+            left: 0.875rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+        }
+        
+        .input-with-icon .input {
+            padding-left: 2.5rem;
+        }
+        
+        /* BADGES */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0.625rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-blue {
+            background: var(--ocean-100);
+            color: var(--navy-600);
+        }
+        
+        .badge-green {
+            background: var(--success-100);
+            color: var(--success-500);
+        }
+        
+        .badge-gold {
+            background: var(--gold-100);
+            color: #92400E;
+        }
+        
+        .badge-red {
+            background: var(--error-100);
+            color: var(--error-500);
+        }
+        
+        .badge-gray {
+            background: var(--gray-100);
+            color: var(--gray-600);
+        }
+        
+        .badge-outline {
+            background: transparent;
+            border: 1px solid currentColor;
+        }
+        
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        
+        .badge-dot.green { background: var(--success-500); }
+        .badge-dot.yellow { background: var(--warning-500); }
+        .badge-dot.red { background: var(--error-500); }
+        
+        /* CARDS */
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+            overflow: hidden;
+        }
+        
+        .card-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--navy-900);
+        }
+        
+        .card-content {
+            padding: 1.25rem;
+        }
+        
+        .card-footer {
+            padding: 1rem 1.25rem;
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-100);
+        }
+        
+        /* ALERTS */
+        .alert {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .alert-icon {
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        
+        .alert-content {
+            flex: 1;
+        }
+        
+        .alert-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .alert-text {
+            font-size: 0.9rem;
+        }
+        
+        .alert-info {
+            background: var(--info-100);
+            color: #1E40AF;
+        }
+        
+        .alert-success {
+            background: var(--success-100);
+            color: #065F46;
+        }
+        
+        .alert-warning {
+            background: var(--warning-100);
+            color: #92400E;
+        }
+        
+        .alert-error {
+            background: var(--error-100);
+            color: #991B1B;
+        }
+        
+        /* TABS */
+        .tabs {
+            display: flex;
+            gap: 0.25rem;
+            background: var(--gray-100);
+            padding: 0.25rem;
+            border-radius: 10px;
+            width: fit-content;
+        }
+        
+        .tab {
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--gray-600);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            background: transparent;
+        }
+        
+        .tab:hover {
+            color: var(--gray-900);
+        }
+        
+        .tab.active {
+            background: var(--white);
+            color: var(--navy-600);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        /* Pills */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .pill:hover {
+            border-color: var(--navy-600);
+            color: var(--navy-600);
+        }
+        
+        .pill.active {
+            background: var(--navy-900);
+            border-color: var(--navy-900);
+            color: white;
+        }
+        
+        .pill-removable {
+            padding-right: 0.5rem;
+        }
+        
+        .pill-remove {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+        
+        /* PROGRESS */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-500), var(--ocean-500));
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* STEPPER */
+        .stepper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        .step-number.pending {
+            background: var(--gray-200);
+            color: var(--gray-500);
+        }
+        
+        .step-number.active {
+            background: var(--navy-900);
+            color: white;
+        }
+        
+        .step-number.completed {
+            background: var(--success-500);
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-600);
+        }
+        
+        .step-label.active {
+            color: var(--navy-900);
+        }
+        
+        .step-connector {
+            width: 40px;
+            height: 2px;
+            background: var(--gray-200);
+        }
+        
+        .step-connector.completed {
+            background: var(--success-500);
+        }
+        
+        /* TOOLTIP */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.5rem 0.75rem;
+            background: var(--navy-900);
+            color: white;
+            font-size: 0.8rem;
+            border-radius: 6px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+            margin-bottom: 8px;
+        }
+        
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: var(--navy-900);
+        }
+        
+        .tooltip-container:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* AVATARS */
+        .avatar {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .avatar-sm { width: 32px; height: 32px; font-size: 0.75rem; }
+        .avatar-md { width: 40px; height: 40px; font-size: 0.875rem; }
+        .avatar-lg { width: 48px; height: 48px; font-size: 1rem; }
+        .avatar-xl { width: 64px; height: 64px; font-size: 1.25rem; }
+        
+        .avatar-blue { background: linear-gradient(135deg, var(--navy-600), var(--ocean-500)); }
+        .avatar-green { background: linear-gradient(135deg, var(--success-500), #34D399); }
+        .avatar-gold { background: linear-gradient(135deg, var(--gold-500), var(--gold-400)); }
+        .avatar-purple { background: linear-gradient(135deg, #8B5CF6, #A78BFA); }
+        
+        /* DROPDOWN */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 10px;
+            box-shadow: var(--shadow-lg);
+            min-width: 200px;
+            z-index: 100;
+            overflow: hidden;
+        }
+        
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--gray-700);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .dropdown-item:hover {
+            background: var(--gray-50);
+            color: var(--navy-900);
+        }
+        
+        .dropdown-divider {
+            height: 1px;
+            background: var(--gray-200);
+            margin: 0.5rem 0;
+        }
+        
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 22, 40, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .modal {
+            background: var(--white);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 480px;
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-100);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy-900);
+        }
+        
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: var(--gray-100);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .modal-close:hover {
+            background: var(--gray-200);
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--gray-100);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+        
+        /* TOAST */
+        .toast-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            z-index: 1001;
+        }
+        
+        .toast {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow-lg);
+            border-left: 4px solid;
+            min-width: 320px;
+        }
+        
+        .toast-success { border-left-color: var(--success-500); }
+        .toast-error { border-left-color: var(--error-500); }
+        .toast-info { border-left-color: var(--ocean-500); }
+        
+        .toast-icon {
+            font-size: 1.25rem;
+        }
+        
+        .toast-content {
+            flex: 1;
+        }
+        
+        .toast-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--gray-900);
+        }
+        
+        .toast-message {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+        
+        /* SWITCH */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 26px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .switch-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: var(--gray-300);
+            border-radius: 26px;
+            transition: 0.3s;
+        }
+        
+        .switch-slider::before {
+            content: '';
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        
+        .switch input:checked + .switch-slider {
+            background: var(--navy-600);
+        }
+        
+        .switch input:checked + .switch-slider::before {
+            transform: translateX(22px);
+        }
+        
+        /* CHECKBOX & RADIO */
+        .checkbox, .radio {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .checkbox input, .radio input {
+            display: none;
+        }
+        
+        .checkbox-mark {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gray-300);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .checkbox input:checked + .checkbox-mark {
+            background: var(--navy-600);
+            border-color: var(--navy-600);
+            color: white;
+        }
+        
+        .radio-mark {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gray-300);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .radio-mark::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: var(--navy-600);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .radio input:checked + .radio-mark {
+            border-color: var(--navy-600);
+        }
+        
+        .radio input:checked + .radio-mark::after {
+            opacity: 1;
+        }
+        
+        /* COLOR SWATCHES */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+        
+        .color-swatch {
+            text-align: center;
+        }
+        
+        .color-box {
+            height: 80px;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .color-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+        
+        .color-hex {
+            font-size: 0.7rem;
+            color: var(--gray-500);
+            font-family: monospace;
+        }
+        
+        /* TYPOGRAPHY */
+        .type-sample {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .type-sample:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .type-label {
+            font-size: 0.75rem;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">AutoApply AI Component Library</h1>
+        <p class="page-subtitle">A comprehensive design system for yacht crew job application platform</p>
+        
+        <!-- Colors -->
+        <section class="section">
+            <h2 class="section-title">Color Palette</h2>
+            <p class="section-desc">Nautical blue, ocean accents, and gold luxury tones</p>
+            
+            <h3 style="font-size: 0.875rem; font-weight: 600; color: var(--gray-500); margin: 1.5rem 0 1rem;">Nautical Blue</h3>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #0A1628;"></div>
+                    <div class="color-name">Navy 900</div>
+                    <div class="color-hex">#0A1628</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #1A2B4A;"></div>
+                    <div class="color-name">Navy 800</div>
+                    <div class="color-hex">#1A2B4A</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #3D5A80;"></div>
+                    <div class="color-name">Navy 600</div>
+                    <div class="color-hex">#3D5A80</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #4A6FA5;"></div>
+                    <div class="color-name">Navy 500</div>
+                    <div class="color-hex">#4A6FA5</div>
+                </div>
+            </div>
+            
+            <h3 style="font-size: 0.875rem; font-weight: 600; color: var(--gray-500); margin: 1.5rem 0 1rem;">Ocean Accents</h3>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #00A8E8;"></div>
+                    <div class="color-name">Ocean 500</div>
+                    <div class="color-hex">#00A8E8</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #22B8E8;"></div>
+                    <div class="color-name">Ocean 400</div>
+                    <div class="color-hex">#22B8E8</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #5CC8E8;"></div>
+                    <div class="color-name">Ocean 300</div>
+                    <div class="color-hex">#5CC8E8</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #E0F4FA;"></div>
+                    <div class="color-name">Ocean 100</div>
+                    <div class="color-hex">#E0F4FA</div>
+                </div>
+            </div>
+            
+            <h3 style="font-size: 0.875rem; font-weight: 600; color: var(--gray-500); margin: 1.5rem 0 1rem;">Gold Luxury</h3>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #C9A227;"></div>
+                    <div class="color-name">Gold 500</div>
+                    <div class="color-hex">#C9A227</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #D9B73A;"></div>
+                    <div class="color-name">Gold 400</div>
+                    <div class="color-hex">#D9B73A</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #F5E6B3;"></div>
+                    <div class="color-name">Gold 100</div>
+                    <div class="color-hex">#F5E6B3</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Typography -->
+        <section class="section">
+            <h2 class="section-title">Typography</h2>
+            <p class="section-desc">Font: Inter (Weights: 400, 500, 600, 700, 800)</p>
+            
+            <div class="type-sample">
+                <div class="type-label">Display / 64px / 800</div>
+                <div style="font-size: 4rem; font-weight: 800; line-height: 1.1;">Land Your Dream Job</div>
+            </div>
+            
+            <div class="type-sample">
+                <div class="type-label">H1 / 40px / 700</div>
+                <div style="font-size: 2.5rem; font-weight: 700;">Welcome to AutoApply AI</div>
+            </div>
+            
+            <div class="type-sample">
+                <div class="type-label">H2 / 32px / 700</div>
+                <div style="font-size: 2rem; font-weight: 700;">Everything You Need</div>
+            </div>
+            
+            <div class="type-sample">
+                <div class="type-label">H3 / 24px / 600</div>
+                <div style="font-size: 1.5rem; font-weight: 600;">Smart Job Matching</div>
+            </div>
+            
+            <div class="type-sample">
+                <div class="type-label">Body Large / 18px / 400</div>
+                <div style="font-size: 1.125rem;">AI-powered job matching and automatic applications for deckhands, stewards, engineers, and chefs.</div>
+            </div>
+            
+            <div class="type-sample">
+                <div class="type-label">Body / 16px / 400</div>
+                <div>Our AI automatically submits tailored applications to matching jobs even while you sleep. Never miss an opportunity.</div>
+            </div>
+            
+            <div class="type-sample">
+                <div class="type-label">Caption / 12px / 500</div>
+                <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Applications Sent • Last Updated 2m ago</div>
+            </div>
+        </section>
+        
+        <!-- Buttons -->
+        <section class="section">
+            <h2 class="section-title">Buttons</h2>
+            
+            <div class="component-label">Primary Buttons</div>
+            <div class="component-row">
+                <button class="btn btn-primary btn-sm">Small</button>
+                <button class="btn btn-primary">Default</button>
+                <button class="btn btn-primary btn-lg">Large</button>
+                <button class="btn btn-primary btn-xl">Extra Large</button>
+            </div>
+            
+            <div class="component-label">Gold CTA Buttons</div>
+            <div class="component-row">
+                <button class="btn btn-gold">Start Free Trial</button>
+                <button class="btn btn-gold btn-lg">Get Started Now</button>
+            </div>
+            
+            <div class="component-label">Secondary / Outline</div>
+            <div class="component-row">
+                <button class="btn btn-secondary">Cancel</button>
+                <button class="btn btn-ghost">Learn More</button>
+            </div>
+            
+            <div class="component-label">Semantic</div>
+            <div class="component-row">
+                <button class="btn btn-success">✓ Approved</button>
+                <button class="btn btn-danger">✕ Delete</button>
+            </div>
+            
+            <div class="component-label">States</div>
+            <div class="component-row">
+                <button class="btn btn-primary" disabled>Disabled</button>
+                <button class="btn btn-primary btn-loading">Loading</button>
+            </div>
+        </section>
+        
+        <!-- Form Elements -->
+        <section class="section">
+            <h2 class="section-title">Form Elements</h2>
+            
+            <div class="component-row" style="align-items: flex-start;">
+                <div class="form-group">
+                    <label class="form-label">Default Input</label>
+                    <input type="text" class="input" placeholder="Enter your name">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">With Icon</label>
+                    <div class="input-with-icon">
+                        <span class="icon">🔍</span>
+                        <input type="text" class="input" placeholder="Search jobs...">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Error State</label>
+                    <input type="text" class="input input-error" value="invalid-email">
+                    <div class="form-error">Please enter a valid email</div>
+                </div>
+            </div>
+            
+            <div class="component-row">
+                <label class="checkbox">
+                    <input type="checkbox">
+                    <span class="checkbox-mark">✓</span>
+                    <span>Remember me</span>
+                </label>
+                
+                <label class="checkbox">
+                    <input type="checkbox" checked>
+                    <span class="checkbox-mark">✓</span>
+                    <span>Email notifications</span>
+                </label>
+                
+                <label class="radio">
+                    <input type="radio" name="option">
+                    <span class="radio-mark"></span>
+                    <span>Option A</span>
+                </label>
+                
+                <label class="radio">
+                    <input type="radio" name="option" checked>
+                    <span class="radio-mark"></span>
+                    <span>Option B</span>
+                </label>
+            </div>
+            
+            <div class="component-row">
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="switch-slider"></span>
+                </label>
+                
+                <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="switch-slider"></span>
+                </label>
+                
+                <span style="font-size: 0.875rem; color: var(--gray-600);">Auto-apply enabled</span>
+            </div>
+        </section>
+        
+        <!-- Badges & Tags -->
+        <section class="section">
+            <h2 class="section-title">Badges & Tags</h2>
+            
+            <div class="component-label">Status Badges</div>
+            <div class="component-row">
+                <span class="badge badge-blue"><span class="badge-dot green"></span> Active</span>
+                <span class="badge badge-green">Applied</span>
+                <span class="badge badge-gold">Pending</span>
+                <span class="badge badge-red">Rejected</span>
+                <span class="badge badge-gray">Draft</span>
+            </div>
+            
+            <div class="component-label">Outline Badges</div>
+            <div class="component-row">
+                <span class="badge badge-outline" style="color: var(--navy-600);">Deckhand</span>
+                <span class="badge badge-outline" style="color: var(--success-500);">STCW</span>
+                <span class="badge badge-outline" style="color: var(--warning-500);">ENG1</span>
+            </div>
+            
+            <div class="component-label">Filter Pills</div>
+            <div class="component-row">
+                <button class="pill">Mediterranean</button>
+                <button class="pill active">Caribbean</button>
+                <button class="pill pill-removable">
+                    80m+ Yacht
+                    <span class="pill-remove">✕</span>
+                </button>
+            </div>
+        </section>
+        
+        <!-- Cards -->
+        <section class="section">
+            <h2 class="section-title">Cards</h2>
+            
+            <div class="component-row" style="align-items: stretch;">
+                <div class="card" style="width: 300px;">
+                    <div class="card-header">
+                        <div class="card-title">Job Card Header</div>
+                    </div>
+                    <div class="card-content">
+                        <p style="color: var(--gray-600); font-size: 0.9rem;">This is the main content area of the card. It can contain any information.</p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary" style="width: 100%;">Apply Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Alerts -->
+        <section class="section">
+            <h2 class="section-title">Alerts</h2>
+            
+            <div class="alert alert-info">
+                <span class="alert-icon">ℹ️</span>
+                <div class="alert-content">
+                    <div class="alert-title">Information</div>
+                    <div class="alert-text">Your profile is 80% complete. Add a photo to increase visibility.</div>
+                </div>
+            </div>
+            
+            <div class="alert alert-success">
+                <span class="alert-icon">✓</span>
+                <div class="alert-content">
+                    <div class="alert-title">Success</div>
+                    <div class="alert-text">Your application has been submitted successfully!</div>
+                </div>
+            </div>
+            
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div class="alert-content">
+                    <div class="alert-title">Warning</div>
+                    <div class="alert-text">Your STCW certificate expires in 30 days.</div>
+                </div>
+            </div>
+            
+            <div class="alert alert-error">
+                <span class="alert-icon">✕</span>
+                <div class="alert-content">
+                    <div class="alert-title">Error</div>
+                    <div class="alert-text">Failed to upload CV. Please try again.</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Navigation Components -->
+        <section class="section">
+            <h2 class="section-title">Navigation</h2>
+            
+            <div class="component-label">Tabs</div>
+            <div class="component-row">
+                <div class="tabs">
+                    <button class="tab active">All Jobs</button>
+                    <button class="tab">Applied</button>
+                    <button class="tab">Saved</button>
+                </div>
+            </div>
+            
+            <div class="component-label">Stepper</div>
+            <div class="component-row">
+                <div class="stepper">
+                    <div class="step">
+                        <div class="step-number completed">✓</div>
+                        <span class="step-label">Profile</span>
+                    </div>
+                    <div class="step-connector completed"></div>
+                    <div class="step">
+                        <div class="step-number active">2</div>
+                        <span class="step-label active">Preferences</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step">
+                        <div class="step-number pending">3</div>
+                        <span class="step-label">Complete</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Data Display -->
+        <section class="section">
+            <h2 class="section-title">Data Display</h2>
+            
+            <div class="component-label">Progress Bar</div>
+            <div class="component-row" style="flex-direction: column;">
+                <div style="width: 100%;">
+                    <div class="progress-label">
+                        <span>Profile Completion</span>
+                        <span style="font-weight: 600;">75%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="component-label">Avatars</div>
+            <div class="component-row">
+                <div class="avatar avatar-sm avatar-blue">JD</div>
+                <div class="avatar avatar-md avatar-green">AS</div>
+                <div class="avatar avatar-lg avatar-gold">MK</div>
+                <div class="avatar avatar-xl avatar-purple">⚓</div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

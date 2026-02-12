@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AutoApply AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Nautical Blue */
+            --navy-900: #0A1628;
+            --navy-800: #1A2B4A;
+            --navy-700: #2A4060;
+            --navy-600: #3D5A80;
+            --navy-500: #4A6FA5;
+            
+            /* Ocean Accents */
+            --ocean-500: #00A8E8;
+            --ocean-400: #22B8E8;
+            --ocean-300: #5CC8E8;
+            --ocean-200: #A8E0F0;
+            --ocean-100: #E0F4FA;
+            
+            /* Gold/Bronze Luxury */
+            --gold-500: #C9A227;
+            --gold-400: #D9B73A;
+            
+            /* Semantic */
+            --success-500: #10B981;
+            --success-100: #D1FAE5;
+            --warning-500: #F59E0B;
+            --warning-100: #FEF3C7;
+            --error-500: #EF4444;
+            --error-100: #FEE2E2;
+            
+            /* Neutral */
+            --gray-900: #111827;
+            --gray-800: #1F2937;
+            --gray-700: #374151;
+            --gray-600: #4B5563;
+            --gray-500: #6B7280;
+            --gray-400: #9CA3AF;
+            --gray-300: #D1D5DB;
+            --gray-200: #E5E7EB;
+            --gray-100: #F3F4F6;
+            --gray-50: #F9FAFB;
+            --white: #FFFFFF;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(10, 22, 40, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(10, 22, 40, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(10, 22, 40, 0.1);
+            
+            /* Sidebar width */
+            --sidebar-width: 260px;
+            --sidebar-collapsed: 72px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--gray-900);
+            background: var(--gray-50);
+            line-height: 1.5;
+        }
+        
+        /* Layout */
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--white);
+            border-right: 1px solid var(--gray-200);
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: width 0.3s ease;
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--navy-900);
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--navy-600), var(--ocean-500));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        
+        .sidebar-nav {
+            flex: 1;
+            padding: 1rem 0.75rem;
+            overflow-y: auto;
+        }
+        
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .nav-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-400);
+            padding: 0 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.625rem 0.75rem;
+            border-radius: 8px;
+            color: var(--gray-600);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            margin-bottom: 0.25rem;
+        }
+        
+        .nav-item:hover {
+            background: var(--gray-100);
+            color: var(--gray-900);
+        }
+        
+        .nav-item.active {
+            background: var(--ocean-100);
+            color: var(--navy-600);
+        }
+        
+        .nav-item .icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        
+        .nav-badge {
+            margin-left: auto;
+            background: var(--error-500);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.125rem 0.5rem;
+            border-radius: 50px;
+        }
+        
+        .sidebar-footer {
+            padding: 1rem 0.75rem;
+            border-top: 1px solid var(--gray-200);
+        }
+        
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .user-card:hover {
+            background: var(--gray-100);
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--navy-600), var(--ocean-500));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--gray-900);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .user-role {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+        
+        /* Main Content */
+        .main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        /* Top Header */
+        .top-header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--gray-100);
+            padding: 0.625rem 1rem;
+            border-radius: 10px;
+            width: 320px;
+        }
+        
+        .search-box input {
+            border: none;
+            background: none;
+            outline: none;
+            flex: 1;
+            font-size: 0.9rem;
+            color: var(--gray-700);
+        }
+        
+        .search-box input::placeholder {
+            color: var(--gray-400);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--gray-200);
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        .btn-icon:hover {
+            background: var(--gray-100);
+            border-color: var(--gray-300);
+        }
+        
+        .btn-icon .badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 18px;
+            height: 18px;
+            background: var(--error-500);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.65rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-primary {
+            padding: 0.625rem 1.25rem;
+            background: linear-gradient(135deg, var(--navy-600), var(--ocean-500));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* Content Area */
+        .content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        /* Page Header */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--navy-900);
+            margin-bottom: 0.25rem;
+        }
+        
+        .page-header p {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.25rem;
+            border: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        
+        .stat-icon.blue {
+            background: var(--ocean-100);
+        }
+        
+        .stat-icon.green {
+            background: var(--success-100);
+        }
+        
+        .stat-icon.gold {
+            background: var(--warning-100);
+        }
+        
+        .stat-icon.purple {
+            background: #F3E8FF;
+        }
+        
+        .stat-content {
+            flex: 1;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy-900);
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+        
+        .stat-change {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+        }
+        
+        .stat-change.up {
+            background: var(--success-100);
+            color: var(--success-500);
+        }
+        
+        .stat-change.down {
+            background: var(--error-100);
+            color: var(--error-500);
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.25rem;
+            background: var(--gray-100);
+            padding: 0.25rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            width: fit-content;
+        }
+        
+        .tab {
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--gray-600);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            background: transparent;
+        }
+        
+        .tab:hover {
+            color: var(--gray-900);
+        }
+        
+        .tab.active {
+            background: var(--white);
+            color: var(--navy-600);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        /* Job Cards Grid */
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        
+        .job-card {
+            background: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+            padding: 1.25rem;
+            transition: all 0.2s;
+        }
+        
+        .job-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--gray-300);
+        }
+        
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .job-title-section {
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .company-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        
+        .job-title-info h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--navy-900);
+            margin-bottom: 0.25rem;
+        }
+        
+        .job-company {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+        
+        .job-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn-ghost {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            color: var(--gray-400);
+        }
+        
+        .btn-ghost:hover {
+            background: var(--gray-100);
+            color: var(--gray-600);
+        }
+        
+        .job-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .job-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+        
+        .job-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tag {
+            padding: 0.375rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .tag-outline {
+            background: transparent;
+            border: 1px solid var(--gray-300);
+            color: var(--gray-600);
+        }
+        
+        .tag-blue {
+            background: var(--ocean-100);
+            color: var(--navy-600);
+        }
+        
+        .tag-green {
+            background: var(--success-100);
+            color: var(--success-500);
+        }
+        
+        .job-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-100);
+        }
+        
+        .job-salary {
+            font-weight: 600;
+            color: var(--navy-900);
+        }
+        
+        .job-salary span {
+            font-weight: 400;
+            color: var(--gray-500);
+            font-size: 0.875rem;
+        }
+        
+        .match-score {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .match-bar {
+            width: 60px;
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .match-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-500), var(--ocean-500));
+            border-radius: 3px;
+        }
+        
+        .match-text {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--success-500);
+        }
+        
+        .btn-apply {
+            padding: 0.5rem 1rem;
+            background: var(--navy-900);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-apply:hover {
+            background: var(--navy-800);
+        }
+        
+        /* Application Tracker */
+        .tracker-section {
+            margin-top: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy-900);
+            margin-bottom: 1.25rem;
+        }
+        
+        .tracker-list {
+            background: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+            overflow: hidden;
+        }
+        
+        .tracker-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        
+        .tracker-item:last-child {
+            border-bottom: none;
+        }
+        
+        .tracker-status {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+        
+        .tracker-status.applied {
+            background: var(--ocean-100);
+        }
+        
+        .tracker-status.interview {
+            background: var(--warning-100);
+        }
+        
+        .tracker-status.offer {
+            background: var(--success-100);
+        }
+        
+        .tracker-content {
+            flex: 1;
+        }
+        
+        .tracker-content h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--navy-900);
+            margin-bottom: 0.25rem;
+        }
+        
+        .tracker-content p {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+        
+        .tracker-date {
+            text-align: right;
+        }
+        
+        .tracker-date .date {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+        
+        .tracker-date .time {
+            font-size: 0.75rem;
+            color: var(--gray-400);
+        }
+        
+        /* Responsive */
+        @media (min-width: 640px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .jobs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 1023px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .main {
+                margin-left: 0;
+            }
+            
+            .search-box {
+                display: none;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .jobs-grid {
+                grid-template-columns: repeat(1, 1fr);
+            }
+            
+            .dashboard-layout {
+                display: grid;
+                grid-template-columns: 1fr 320px;
+                gap: 2rem;
+            }
+        }
+        
+        @media (min-width: 1280px) {
+            .jobs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="#" class="logo">
+                    <div class="logo-icon">⚓</div>
+                    AutoApply AI
+                </a>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-label">Main</div>
+                    <a href="#" class="nav-item active">
+                        <span class="icon">📊</span>
+                        Dashboard
+                    </a>
+                    <a href="#" class="nav-item">
+                        <span class="icon">💼</span>
+                        Job Listings
+                        <span class="nav-badge">12</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <span class="icon">📝</span>
+                        My Applications
+                    </a>
+                    <a href="#" class="nav-item">
+                        <span class="icon">⭐</span>
+                        Saved Jobs
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-label">Tools</div>
+                    <a href="#" class="nav-item">
+                        <span class="icon">🤖</span>
+                        Auto-Apply
+                    </a>
+                    <a href="#" class="nav-item">
+                        <span class="icon">📄</span>
+                        CV Builder
+                    </a>
+                    <a href="#" class="nav-item">
+                        <span class="icon">🎯</span>
+                        Preferences
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-label">Support</div>
+                    <a href="#" class="nav-item">
+                        <span class="icon">💬</span>
+                        Messages
+                        <span class="nav-badge">3</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <span class="icon">❓</span>
+                        Help Center
+                    </a>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-card">
+                    <div class="user-avatar">JD</div>
+                    <div class="user-info">
+                        <div class="user-name">John Davidson</div>
+                        <div class="user-role">Deckhand</div>
+                    </div>
+                    <span>⚙️</span>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Search jobs, companies...">
+                </div>
+                
+                <div class="header-actions">
+                    <button class="btn-icon">
+                        <span>🔔</span>
+                        <span class="badge">5</span>
+                    </button>
+                    <button class="btn-icon">
+                        <span>💬</span>
+                    </button>
+                    <button class="btn-primary">
+                        <span>+</span>
+                        Quick Apply
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Content Area -->
+            <div class="content">
+                <div class="page-header">
+                    <h1>Welcome back, John! 👋</h1>
+                    <p>Here's what's happening with your job search today.</p>
+                </div>
+                
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">📨</div>
+                        <div class="stat-content">
+                            <div class="stat-value">24</div>
+                            <div class="stat-label">Applications Sent</div>
+                        </div>
+                        <span class="stat-change up">+12%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">👁️</div>
+                        <div class="stat-content">
+                            <div class="stat-value">156</div>
+                            <div class="stat-label">Profile Views</div>
+                        </div>
+                        <span class="stat-change up">+28%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon gold">🎯</div>
+                        <div class="stat-content">
+                            <div class="stat-value">8</div>
+                            <div class="stat-label">Interview Requests</div>
+                        </div>
+                        <span class="stat-change up">+4</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon purple">⭐</div>
+                        <div class="stat-content">
+                            <div class="stat-value">3</div>
+                            <div class="stat-label">Offers Received</div>
+                        </div>
+                        <span class="stat-change up">+2</span>
+                    </div>
+                </div>
+                
+                <div class="dashboard-layout">
+                    <div class="main-column">
+                        <!-- Tabs -->
+                        <div class="tabs">
+                            <button class="tab active">Recommended Jobs</button>
+                            <button class="tab">New Listings</button>
+                            <button class="tab">Saved</button>
+                            <button class="tab">Auto-Applied</button>
+                        </div>
+                        
+                        <!-- Job Listings -->
+                        <div class="jobs-grid">
+                            <div class="job-card">
+                                <div class="job-header">
+                                    <div class="job-title-section">
+                                        <div class="company-logo">🛥️</div>
+                                        <div class="job-title-info">
+                                            <h3>Deckhand - M/Y Aurora</h3>
+                                            <div class="job-company">Private Yacht • Monaco</div>
+                                        </div>
+                                    </div>
+                                    <div class="job-actions">
+                                        <button class="btn-ghost">♡</button>
+                                        <button class="btn-ghost">⋮</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="job-details">
+                                    <div class="job-detail">
+                                        <span>📍</span> Mediterranean
+                                    </div>
+                                    <div class="job-detail">
+                                        <span>💰</span> €3,500/month
+                                    </div>
+                                    <div class="job-detail">
+                                        <span>📅</span> ASAP
+                                    </div>
+                                    <div class="job-detail">
+                                        <span>⏱️</span> Full-time
+                                    </div>
+                                </div>
+                                
+                                <div class="job-tags">
+                                    <span class="tag tag-blue">Deckhand</span>
+                                    <span class="tag tag-outline">80m+ Yacht</span>
+                                    <span class="tag tag-green">STCW Required</span>
+                                </div>
+                                
+                                <div class="job-footer">
+                                    <div class="match-score">
+                                        <span class="match-text">98% Match</span>
+                                        <div class="match-bar">
+                                            <div class="match-fill" style="width: 98%"></div>
+                                        </div>
+                                    </div>
+                                    <button class="btn-apply">Apply Now</button>
+                                </div>
+                            </div>
+                            
+                            <div class="job-card">
+                                <div class="job-header">
+                                    <div class="job-title-section">
+                                        <div class="company-logo">⛵</div>
+                                        <div class="job-title-info">
+                                            <h3>2nd Stewardess - S/Y Serenity</h3>
+                                            <div class="job-company">Charter Yacht • Caribbean</div>
+                                        </div>
+                                    </div>
+                                    <div class="job-actions">
+                                        <button class="btn-ghost">♡</button>
+                                        <button class="btn-ghost">⋮</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="job-details">
+                                    <div class="job-detail">
+                                        <span>📍</span> Caribbean
+                                    </div>
+                                    <div class="job-detail">
+                                        <span>💰</span> €4,200/month
+                                    </div>
+                                    <div class="job-detail">
+                                        <span>📅</span> Seasonal
+                                    </div>
+                                    <div class="job-detail">
+                                        <span>⏱️</span> 6 months
+                                    </div>
+                                </div>
+                                
+                                <div class="job-tags">
+                                    <span class="tag tag-blue">Stewardess</span>
+                                    <span class="tag tag-outline">50m Sailing</span>
+                                    <span class="tag tag-green">ENG1 Required</span>
+                                </div>
+                                
+                                <div class="job-footer">
+                                    <div class="match-score">
+                                        <span class="match-text">85% Match</span>
+                                        <div class="match-bar">
+                                            <div class="match-fill" style="width: 85%"></div>
+                                        </div>
+                                    </div>
+                                    <button class="btn-apply">Apply Now</button>
+                                </div>
+                            </div>
+                            
+                            <div class="job-card">
+                                <div class="job-header">
+                                    <div class="job-title-section">
+                                        <div class="company-logo">🚢</div>
+                                        <div class="job-title-info">
+                                            <h3>3rd Engineer - M/Y Eclipse</h3>
+                                            <div class="job-company">Private Yacht • UAE</div>
+                                        </div>
+                                    </div>
+                                    <div class="job-actions">
+                                        <button class="btn-ghost">♡</button>
+                                        <button class="btn-ghost">⋮</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="job-details">
+                                    <div class="job-detail">
+                                        <span>📍</span> Dubai
+                                    </div>
+                                    <div class="job-detail">
+                                        <span>💰</span> €6,500/month
+                                    </div>
+                                    <div class="job-detail">
+                                        <span>📅</span> Immediate
+                                    </div>
+                                    <div class="job-detail">
+                                        <span>⏱️</span> Permanent
+                                    </div>
+                                </div>
+                                
+                                <div class="job-tags">
+                                    <span class="tag tag-blue">Engineer</span>
+                                    <span class="tag tag-outline">100m+ Yacht</span>
+                                    <span class="tag tag-green">AEC Required</span>
+                                </div>
+                                
+                                <div class="job-footer">
+                                    <div class="match-score">
+                                        <span class="match-text">72% Match</span>
+                                        <div class="match-bar">
+                                            <div class="match-fill" style="width: 72%"></div>
+                                        </div>
+                                    </div>
+                                    <button class="btn-apply">Apply Now</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Application Tracker -->
+                        <div class="tracker-section">
+                            <h2 class="section-title">Recent Activity</h2>
+                            <div class="tracker-list">
+                                <div class="tracker-item">
+                                    <div class="tracker-status applied">📨</div>
+                                    <div class="tracker-content">
+                                        <h4>Application sent to M/Y Aurora</h4>
+                                        <p>Deckhand position - Monaco</p>
+                                    </div>
+                                    <div class="tracker-date">
+                                        <div class="date">Today</div>
+                                        <div class="time">2 hours ago</div>
+                                    </div>
+                                </div>
+                                <div class="tracker-item">
+                                    <div class="tracker-status interview">🎤</div>
+                                    <div class="tracker-content">
+                                        <h4>Interview scheduled with S/Y Serenity</h4>
+                                        <p>Video call with Captain</p>
+                                    </div>
+                                    <div class="tracker-date">
+                                        <div class="date">Tomorrow</div>
+                                        <div class="time">10:00 AM UTC</div>
+                                    </div>
+                                </div>
+                                <div class="tracker-item">
+                                    <div class="tracker-status offer">🎉</div>
+                                    <div class="tracker-content">
+                                        <h4>Job offer received!</h4>
+                                        <p>M/Y Eclipse - 3rd Engineer</p>
+                                    </div>
+                                    <div class="tracker-date">
+                                        <div class="date">Yesterday</div>
+                                        <div class="time">Respond by Feb 15</div>
+                                    </div>
+                                </div>
+                                <div class="tracker-item">
+                                    <div class="tracker-status applied">👁️</div>
+                                    <div class="tracker-content">
+                                        <h4>Profile viewed by recruiter</h4>
+                                        <p>Bluewater Yachting Agency</p>
+                                    </div>
+                                    <div class="tracker-date">
+                                        <div class="date">Yesterday</div>
+                                        <div class="time">5:30 PM</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

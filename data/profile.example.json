@@ -1,0 +1,43 @@
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@example.com",
+  "phone": "+1 234 567 8900",
+  "address": "123 Marina Street",
+  "city": "Fort Lauderdale",
+  "country": "USA",
+  "nationality": "American",
+  "dateOfBirth": "1990-01-15",
+  
+  "currentPosition": "Executive Chef",
+  "yearsExperience": "8",
+  "certifications": [
+    "STCW Basic Training",
+    "ENG1 Medical",
+    "Food Safety Level 3",
+    " ships Cook Certificate"
+  ],
+  "languages": ["English", "Spanish", "French"],
+  "skills": [
+    "Mediterranean Cuisine",
+    "Asian Fusion",
+    "Pastry",
+    "Menu Planning",
+    "Provisioning"
+  ],
+  
+  "cvPath": "./documents/cv.pdf",
+  "coverLetterPath": "./documents/cover-letter.pdf",
+  "passportPath": "./documents/passport.pdf",
+  "certificates": [
+    "./documents/stcw.pdf",
+    "./documents/eng1.pdf"
+  ],
+  
+  "availableFrom": "2024-03-01",
+  "preferredPositions": ["Executive Chef", "Head Chef", "Sous Chef"],
+  "preferredLocations": ["Mediterranean", "Caribbean", "USA"],
+  "salaryExpectation": "6000 EUR/month",
+  
+  "coverLetter": "Dear Hiring Manager,\n\nI am writing to express my interest in the {{position}} role{{vessel}}.\n\nWith {{yearsExperience}} years of experience in the yachting industry, I have developed a strong foundation in {{skills}}. I am confident that my skills and experience make me a strong candidate for this position.\n\nI am available {{availableFrom}} and would welcome the opportunity to discuss how I can contribute to your team.\n\nThank you for considering my application.\n\nBest regards,\n{{name}}"
+}

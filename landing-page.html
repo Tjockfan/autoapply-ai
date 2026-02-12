@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoApply AI - Yacht Crew Jobs Automated</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Nautical Blue */
+            --navy-900: #0A1628;
+            --navy-800: #1A2B4A;
+            --navy-700: #2A4060;
+            --navy-600: #3D5A80;
+            --navy-500: #4A6FA5;
+            
+            /* Ocean Accents */
+            --ocean-500: #00A8E8;
+            --ocean-400: #22B8E8;
+            --ocean-300: #5CC8E8;
+            --ocean-200: #A8E0F0;
+            --ocean-100: #E0F4FA;
+            
+            /* Gold/Bronze Luxury */
+            --gold-500: #C9A227;
+            --gold-400: #D9B73A;
+            --gold-300: #E8C94C;
+            --gold-100: #F5E6B3;
+            
+            /* Semantic */
+            --success-500: #10B981;
+            --warning-500: #F59E0B;
+            
+            /* Neutral */
+            --gray-900: #111827;
+            --gray-700: #374151;
+            --gray-500: #6B7280;
+            --gray-300: #D1D5DB;
+            --gray-100: #F3F4F6;
+            --white: #FFFFFF;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(10, 22, 40, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(10, 22, 40, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(10, 22, 40, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(10, 22, 40, 0.15);
+            --shadow-glow: 0 0 30px rgba(0, 168, 232, 0.3);
+            --shadow-gold: 0 0 30px rgba(201, 162, 39, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--gray-900);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--gray-100);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            box-shadow: var(--shadow-md);
+        }
+        
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--navy-900);
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--navy-600), var(--ocean-500));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .nav-links {
+            display: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--navy-600);
+        }
+        
+        .nav-cta {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-secondary {
+            color: var(--navy-600);
+            background: transparent;
+            border: 1px solid var(--gray-300);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--gray-100);
+            border-color: var(--navy-600);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--navy-600), var(--ocean-500));
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+        
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-500), var(--gold-400));
+            color: var(--navy-900);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg), var(--shadow-gold);
+        }
+        
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(180deg, var(--navy-900) 0%, var(--navy-800) 100%);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(0, 168, 232, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(201, 162, 39, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .hero-content {
+            text-align: center;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 168, 232, 0.15);
+            color: var(--ocean-300);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 168, 232, 0.3);
+        }
+        
+        .hero-badge .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--success-500);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 800;
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--ocean-400), var(--gold-400));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+        }
+        
+        .hero-cta {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+        
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .hero-visual {
+            position: relative;
+        }
+        
+        .dashboard-preview {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .dashboard-preview-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .dot-red { background: #ff5f57; }
+        .dot-yellow { background: #febc2e; }
+        .dot-green { background: #28c840; }
+        
+        .preview-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .preview-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: slideIn 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        .preview-card:nth-child(1) { animation-delay: 0.1s; }
+        .preview-card:nth-child(2) { animation-delay: 0.2s; }
+        .preview-card:nth-child(3) { animation-delay: 0.3s; }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .preview-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--ocean-500), var(--navy-600));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        .preview-info {
+            flex: 1;
+        }
+        
+        .preview-title {
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .preview-meta {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+        }
+        
+        .preview-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .status-applied {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-500);
+        }
+        
+        .status-pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning-500);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 6rem 1.5rem;
+            background: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 4rem;
+        }
+        
+        .section-tag {
+            display: inline-block;
+            background: var(--ocean-100);
+            color: var(--navy-600);
+            padding: 0.375rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            font-weight: 800;
+            color: var(--navy-900);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .section-subtitle {
+            color: var(--gray-500);
+            font-size: 1.125rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        .feature-card {
+            background: var(--gray-100);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--ocean-200);
+        }
+        
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .feature-icon.blue {
+            background: var(--ocean-100);
+            color: var(--ocean-500);
+        }
+        
+        .feature-icon.gold {
+            background: var(--gold-100);
+            color: var(--gold-500);
+        }
+        
+        .feature-icon.navy {
+            background: rgba(61, 90, 128, 0.1);
+            color: var(--navy-600);
+        }
+        
+        .feature-icon.green {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-500);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy-900);
+            margin-bottom: 0.75rem;
+        }
+        
+        .feature-card p {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            padding: 6rem 1.5rem;
+            background: var(--gray-100);
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--navy-600), var(--ocean-500));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy-900);
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-content p {
+            color: var(--gray-500);
+        }
+        
+        /* Pricing Section */
+        .pricing {
+            padding: 6rem 1.5rem;
+            background: white;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: var(--gray-100);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .pricing-card.featured {
+            background: var(--navy-900);
+            border-color: var(--gold-500);
+            transform: scale(1.02);
+        }
+        
+        .pricing-card.featured .pricing-name,
+        .pricing-card.featured .pricing-price,
+        .pricing-card.featured .pricing-description,
+        .pricing-card.featured .feature-list li {
+            color: white;
+        }
+        
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            right: 2rem;
+            background: linear-gradient(135deg, var(--gold-500), var(--gold-400));
+            color: var(--navy-900);
+            padding: 0.375rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        
+        .pricing-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy-900);
+            margin-bottom: 0.5rem;
+        }
+        
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--navy-900);
+            margin-bottom: 0.5rem;
+        }
+        
+        .pricing-price span {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gray-500);
+        }
+        
+        .pricing-card.featured .pricing-price span {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .pricing-description {
+            color: var(--gray-500);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            color: var(--gray-700);
+            font-size: 0.95rem;
+        }
+        
+        .feature-list li::before {
+            content: '✓';
+            width: 20px;
+            height: 20px;
+            background: var(--success-500);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+        
+        .pricing-card .btn {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 6rem 1.5rem;
+            background: linear-gradient(135deg, var(--navy-900), var(--navy-800));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 50% 100%, rgba(0, 168, 232, 0.2) 0%, transparent 70%);
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .cta h2 {
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .cta p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 4rem 1.5rem 2rem;
+            background: var(--navy-900);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-brand {
+            max-width: 300px;
+        }
+        
+        .footer-brand .logo {
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        .footer-links h4 {
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--ocean-400);
+        }
+        
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.875rem;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .social-link:hover {
+            background: var(--ocean-500);
+            transform: translateY(-2px);
+        }
+        
+        /* Responsive */
+        @media (min-width: 640px) {
+            .hero-cta {
+                flex-direction: row;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-grid {
+                grid-template-columns: 2fr 1fr 1fr 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+            }
+            
+            .hero-container {
+                grid-template-columns: 1fr 1fr;
+                text-align: left;
+            }
+            
+            .hero-content {
+                text-align: left;
+            }
+            
+            .hero p {
+                margin: 0 0 2rem;
+            }
+            
+            .hero-cta {
+                justify-content: flex-start;
+            }
+            
+            .hero-stats {
+                margin: 0;
+            }
+            
+            .stat {
+                text-align: left;
+            }
+            
+            .steps {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .step {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .pricing-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">⚓</div>
+                AutoApply AI
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#pricing">Pricing</a>
+            </div>
+            <div class="nav-cta">
+                <a href="#" class="btn btn-secondary">Sign In</a>
+                <a href="#" class="btn btn-primary">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="pulse"></span>
+                    Now accepting applications
+                </div>
+                <h1>Land Your Dream <span>Yacht Crew</span> Job on Autopilot</h1>
+                <p>AI-powered job matching and automatic applications for deckhands, stewards, engineers, and chefs. Let AutoApply AI handle the paperwork while you focus on your career.</p>
+                <div class="hero-cta">
+                    <a href="#" class="btn btn-gold btn-lg">Start Free Trial</a>
+                    <a href="#" class="btn btn-secondary btn-lg" style="color: white; border-color: rgba(255,255,255,0.3);">Watch Demo</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-value">2,500+</span>
+                        <span class="stat-label">Jobs Applied</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">89%</span>
+                        <span class="stat-label">Success Rate</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">48hrs</span>
+                        <span class="stat-label">Avg. Response</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="dashboard-preview">
+                    <div class="dashboard-preview-header">
+                        <span class="dot dot-red"></span>
+                        <span class="dot dot-yellow"></span>
+                        <span class="dot dot-green"></span>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-card">
+                            <div class="preview-avatar">JS</div>
+                            <div class="preview-info">
+                                <div class="preview-title">Deckhand Position - M/Y Aurora</div>
+                                <div class="preview-meta">Applied 2 minutes ago</div>
+                            </div>
+                            <span class="preview-status status-applied">Applied</span>
+                        </div>
+                        <div class="preview-card">
+                            <div class="preview-avatar">AS</div>
+                            <div class="preview-info">
+                                <div class="preview-title">2nd Stewardess - S/Y Serenity</div>
+                                <div class="preview-meta">Auto-applying...</div>
+                            </div>
+                            <span class="preview-status status-pending">Pending</span>
+                        </div>
+                        <div class="preview-card">
+                            <div class="preview-avatar">MK</div>
+                            <div class="preview-info">
+                                <div class="preview-title">Chef de Cuisine - M/Y Eclipse</div>
+                                <div class="preview-meta">Matched 98%</div>
+                            </div>
+                            <span class="preview-status status-applied">Applied</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Features</span>
+                <h2 class="section-title">Everything You Need to Get Hired</h2>
+                <p class="section-subtitle">From job discovery to application submission, our AI handles every step of your yacht crew job search.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon blue">🎯</div>
+                    <h3>Smart Job Matching</h3>
+                    <p>AI analyzes your profile, experience, and preferences to find the perfect yacht crew positions that match your skills.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon gold">🤖</div>
+                    <h3>Auto-Apply 24/7</h3>
+                    <p>Our AI automatically submits tailored applications to matching jobs even while you sleep. Never miss an opportunity.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon navy">📊</div>
+                    <h3>Application Tracker</h3>
+                    <p>Track all your applications in one dashboard. See status updates, interview requests, and offers in real-time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon green">✨</div>
+                    <h3>CV Optimization</h3>
+                    <p>AI-enhanced CV builder with yacht industry templates. Stand out from the competition with professionally formatted documents.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon blue">🔔</div>
+                    <h3>Instant Alerts</h3>
+                    <p>Get notified immediately when new jobs matching your criteria are posted. Be the first to apply.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon gold">💬</div>
+                    <h3>Interview Prep</h3>
+                    <p>AI-powered interview coaching specific to yacht crew hiring. Practice with common questions and get feedback.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon navy">🌐</div>
+                    <h3>Global Coverage</h3>
+                    <p>Access yacht job listings from Mediterranean, Caribbean, Pacific and beyond. Work anywhere in the world.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon green">🔒</div>
+                    <h3>Privacy Protected</h3>
+                    <p>Your data is encrypted and never shared. Control exactly what information employers can see.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">How It Works</span>
+                <h2 class="section-title">Get Started in Minutes</h2>
+                <p class="section-subtitle">Three simple steps to automate your yacht crew job search</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Create Your Profile</h3>
+                        <p>Upload your CV, certificates, and preferences. Our AI analyzes your experience and qualifications.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Set Your Preferences</h3>
+                        <p>Choose yacht types, locations, positions, and salary expectations. Fine-tune your job matching criteria.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Let AI Work for You</h3>
+                        <p>AutoApply AI finds and applies to matching jobs 24/7. You focus on preparing for interviews.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Pricing</span>
+                <h2 class="section-title">Simple, Transparent Pricing</h2>
+                <p class="section-subtitle">Choose the plan that fits your career goals. No hidden fees.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-name">Starter</div>
+                    <div class="pricing-price">$29<span>/month</span></div>
+                    <p class="pricing-description">Perfect for getting started with yacht crew applications</p>
+                    <ul class="feature-list">
+                        <li>10 auto-applications/month</li>
+                        <li>Basic job matching</li>
+                        <li>Application tracking</li>
+                        <li>Email support</li>
+                        <li>CV templates</li>
+                    </ul>
+                    <button class="btn btn-secondary">Get Started</button>
+                </div>
+                <div class="pricing-card featured">
+                    <span class="pricing-badge">MOST POPULAR</span>
+                    <div class="pricing-name">Professional</div>
+                    <div class="pricing-price">$79<span>/month</span></div>
+                    <p class="pricing-description">Best value for serious job seekers</p>
+                    <ul class="feature-list">
+                        <li>Unlimited auto-applications</li>
+                        <li>Advanced AI matching</li>
+                        <li>Priority application queue</li>
+                        <li>Interview prep AI</li>
+                        <li>24/7 chat support</li>
+                        <li>CV optimization</li>
+                        <li>Salary insights</li>
+                    </ul>
+                    <button class="btn btn-gold">Start Free Trial</button>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-name">Agency</div>
+                    <div class="pricing-price">$199<span>/month</span></div>
+                    <p class="pricing-description">For crew agencies managing multiple candidates</p>
+                    <ul class="feature-list">
+                        <li>Everything in Professional</li>
+                        <li>Up to 10 crew profiles</li>
+                        <li>Agency dashboard</li>
+                        <li>Bulk applications</li>
+                        <li>API access</li>
+                        <li>Dedicated account manager</li>
+                    </ul>
+                    <button class="btn btn-secondary">Contact Sales</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-content">
+            <h2>Ready to Land Your Dream Job?</h2>
+            <p>Join thousands of yacht crew professionals who've accelerated their careers with AutoApply AI.</p>
+            <a href="#" class="btn btn-gold btn-lg">Start Your Free 14-Day Trial</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <div class="logo-icon">⚓</div>
+                        AutoApply AI
+                    </a>
+                    <p>AI-powered job application automation for yacht crew professionals. Land your dream job faster.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">API</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 AutoApply AI. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-link">𝕏</a>
+                    <a href="#" class="social-link">in</a>
+                    <a href="#" class="social-link">📸</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
